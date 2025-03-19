@@ -11,9 +11,16 @@ public class WeatherApp {
         String city = scanner.nextLine();
         scanner.close();
 
-        String apiKey = "83d903be83408c562d41955f0c606ca0"; // Replace with your valid API key
-        String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
+        // Fetch API key from environment variable
+        String apiKey = System.getenv("WEATHER_API_KEY");
 
+        // Check if API key is available
+        if (apiKey == null || apiKey.isEmpty()) {
+            System.out.println("Error: API key not found. Please set WEATHER_API_KEY environment variable.");
+            return;
+        }
+
+        String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
         fetchWeatherData(apiUrl);
     }
 
